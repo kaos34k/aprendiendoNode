@@ -1,26 +1,24 @@
 doctype html
 html(lang="en")
-  head
-    title= pageTitle
-    script(type='text/javascript').
-      if (foo) {
-         bar(1 + 5)
-      }
-  body
-    h1 Jade - node template engine
-    #container.col
-      if youAreUsingJade
-        p You are amazing
-      else
-        p Get on it!
-      p.
-        Jade is a terse and simple
-        templating language with a
-        strong focus on performance
-        and powerful features.
-      p!= hola
-    - var arreglo = [1,2,3,4,5]; 
-    - for(var i = arreglo.length - 1; i >= 0; i--)
-      p.
-       haga click aqui #[a(href=arreglo[i]) por favor]
-    form(action="/" method="POST")        
+head
+  title¡El mejor lugar del mundo!
+  meta(charset="utf-8")
+  link(href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet")
+  link(href="css/main.css" rel="stylesheet")
+  link(href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css')
+  link(href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css')
+  link(href='css/animate.css' rel='stylesheet' type='text/css')
+body
+  section(class="full-height text-center" id="main-content")
+    div(class="data")
+      div(class="col-md-3 center-block no-float top-space")
+        img(src="imgs/icecream.png" class="animated fadeIn")
+        h1(class="pacifico big green animated fadeIn delay-1") prueba node, javascript, jade y mongo  
+        div(class="animated fadeInDown delay-2")
+          h2 Ven, convive, diviértete.
+          nav
+            a(href="menu.html" class="right-space") Menú
+            a(href="contacto.html" class="right-space") Contacto
+            a(href="" class="right-space") Acerca de 
+  script(src="https://code.jquery.com/jquery-2.1.1.min.js")
+  script(src="js/main.js")

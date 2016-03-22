@@ -21,10 +21,12 @@ app.get("/",function(req, res){
 /*
 * Metodo post que recibe parametros de un formulario
 */
+
 /*
 app.post("/", function( req, res ){
 	res.render("form");
-}); */
+}); 
+*/
 
 /*
 *Especificamos el puerto
