@@ -1,0 +1,15 @@
+{
+  "name": "prueba",
+  "version": "1.0.0",
+  "description": "hola mundo",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "yeison",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "jade": "^1.11.0"
+  }
+}

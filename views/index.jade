@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+  head
+    title= pageTitle
+    script(type='text/javascript').
+      if (foo) {
+         bar(1 + 5)
+      }
+  body
+    h1 Jade - node template engine
+    #container.col
+      if youAreUsingJade
+        p You are amazing
+      else
+        p Get on it!
+      p.
+        Jade is a terse and simple
+        templating language with a
+        strong focus on performance
+        and powerful features.
+      p!= hola
+    - var arreglo = [1,2,3,4,5]; 
+    - for(var i = arreglo.length - 1; i >= 0; i--)
+      p.
+       haga click aqui #[a(href=arreglo[i]) por favor]
+    form(action="/" method="POST")        
