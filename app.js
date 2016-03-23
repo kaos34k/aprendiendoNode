@@ -3,7 +3,12 @@
 *Crear servidor con un objeto app 
 */
 var sever = require('express');
+var mongoose = require('mongoose');
 var app = sever();
+/*
+<!------PILAS aqui esta la solución por si no te puedes conectar a mongo---------http://dba.stackexchange.com/questions/55056/how-to-connect-to-mongodb-on-windows-8
+*/
+mongoose.connect("mongodb://localhost/webNode");
 /*
 * Preparaqmos el motor de plantillas jade 
 */
