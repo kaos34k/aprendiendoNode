@@ -2,7 +2,7 @@ extends ../layout.jade
 block contenido
 	div(class="col-md-5 center-block no-float top-space text-left")
 		h1 Agregar producto
-		form(method="post" action="/menu" enctype="multipart/form-data" style="margin-top:1.5em;")
+		form(action="/menu"  method="post" enctype="multipart/form-data" style="margin-top:1.5em;")
 			div(class="form-group")
 				label Nombre
 				input(type="text" name="title" placeholder="nombre" class="form-control")

@@ -57,15 +57,7 @@ app.get("/",function(req, res){
 	res.render("index");
 });
 
-//Consultar o listar productos
-app.get("/menu", function( solicitud, respuesta ) {
-	Producto.find(function(error, documento) {
-		if(error){console.log(error)}
-		respuesta.render("menu/index", { productos: documento });	
-	});
-});
-
-//Formulario de ingreso a la app
+//Formulario de ingreso a la administración de la app
 app.post("/admin",function(solicitud,respuesta){
 	if(solicitud.body.password == pwd){
 		Producto.find(function(error,documento){
@@ -77,20 +69,61 @@ app.post("/admin",function(solicitud,respuesta){
 	}
 });
 
+//pasar la vista del menu registro de productos
+app.get("/menu/new", function( solicitud, respuesta ) {
+	respuesta.render("menu/new");
+});
+
+//Guardar productos
+app.post("/menu", function( solicitud, respuesta ) {
+	var data = {
+		title: solicitud.body.title,
+		descripcion: solicitud.body.descripcion,
+		imagenUrl: "",
+		precio: solicitud.body.precio
+	}
+
+	console.log(data);
+	var producto = new Producto(data);
+
+	producto.save( function( error ){
+		if( error ) { console.log( error ) };
+		respuesta.render("index");
+	}); 
+	/*cloudinary.uploader.upload( solicitud.files.imagenUrl.path, 
+		function( result ) { 
+	  		producto.imagenUrl = result.url;
+	  		producto.save( function( error ){
+	  			console.log('producto');
+				respuesta.render("index");
+			}); 
+		}
+	);*/
+});
+
+//Consultar o listar productos
+app.get("/menu", function( solicitud, respuesta ) {
+	Producto.find(function(error, documento) {
+		if(error){console.log(error)}
+		respuesta.render("menu/index", { productos: documento });	
+	});
+});
+
 app.get("/admin",function(solicitud,respuesta){
 	respuesta.render("admin/form");
 });
  
 
-app.post("/menu/:id",function(solicitud,respuesta){	
-	if(solicitud.body.password == pwd){
+app.put("/menu/:id",function(solicitud,respuesta){	
+	var id = solicitud.params.id;
+	if( pwd  == solicitud.body.password ){
 		var data = {
 			title: solicitud.body.title,
-			description: solicitud.body.description,
-			pricing: solicitud.body.pricing
+			descripcion: solicitud.body.descripcion,
+			precio: solicitud.body.precio
 		};
 
-		Producto.update({"_id": solicitud.params.id}, data, function(product){
+		Producto.update({"_id": id}, data, function(product){
 			respuesta.redirect("/menu");
 		});	
 
@@ -129,36 +162,6 @@ app.get("/menu/edit/:id", function(solicitud, respuesta){
 });
 */
 
-//pasar la vista del menu registro de productos
-app.get("/menu/new", function( solicitud, respuesta ) {
-	respuesta.render("menu/new");
-});
-
-//Guardar productos
-app.post("/menu", function( solicitud, respuesta ) {
-	var data = {
-		title: solicitud.body.title,
-		descripcion: solicitud.body.descripcion,
-		imagenUrl: "",
-		precio: solicitud.body.precio
-	}
-
-	var producto = new Producto(data);
-
-	producto.save( function( error ){
-		respuesta.render("index");
-	}); 
-	/*cloudinary.uploader.upload( solicitud.files.imagenUrl.path, 
-		function( result ) { 
-	  		producto.imagenUrl = result.url;
-	  		producto.save( function( error ){
-	  			console.log('producto');
-				respuesta.render("index");
-			}); 
-		}
-	);*/
-});
-
 app.get("/menu/delete/:id", function(solicitud, respuesta){
 	var id_producto = solicitud.params.id;
 	Producto.findOne({"_id": id_producto},function(error,producto){
@@ -167,8 +170,10 @@ app.get("/menu/delete/:id", function(solicitud, respuesta){
 });
 
 app.delete("/menu/:id", function(solicitud, respuesta){
-	if(solicitud.params.id == pwd){
-		Producto.remove({"_id": solicitud.params.id}, function(error){
+	var id =  solicitud.params.id;
+	if(solicitud.body.password == pwd){
+		Producto.remove({"_id": id}, function(error){
+			if(error){ console.log(error); }
 			respuesta.redirect("/menu");
 		});	
 	} else {
