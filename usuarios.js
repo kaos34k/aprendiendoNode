@@ -5,17 +5,25 @@ mongoose.connect('mongodb://localhost/base_datos');
 var email = [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3,4})+$/,"El correo no es valido"];
 var gen = ["F","M"];
 
+/*validaciones personalizadas*/
+var = validar_contraseña = {
+	validator: function(pass){
+		return this.password_confirmation = pass;	
+	},
+	message:"Las contraseñas no son iguales",
+};	
+
+
 var user_schema = {
 	nombre:String,
 	segundo_nombre : String,
 	usuario:{type:String, required: true, maxlength:[50, "Nombre de usuario es muy grande"]},
-	password:{type:Stringl, minlength[8, "La contraseña es muy corta"]},
+	password:{type:Stringl,	minlength[8, "La contraseña es muy corta"],validate: validar_contraseña},
 	edad :{ type:Number, min:[5, "la edad no puede ser menor que 5"], max:[90, "La edad no puede ser mayor a 90"] },
 	email: {type:String, required: "El correo es obligatorio", match:email},
 	fecha_nacimiento:Date,
 	genero:{type:String, enum:{values:gen, message:"Opcion no valida"}}
 };
-
 
 user_schema.virtual('password_confirmation').get(function() {
 	return this.p_confirmation;
@@ -32,3 +40,22 @@ user_schema.virtual('full_name').get(function() {
 });
 
 var user = mongoose.model('User', user_schema);
+
+
+/*para guardar un modelo*/
+
+app.post( "/users", function( req, res) {
+	var user= new user({
+		nombre:req.body.nombre,
+		segundo_nombre : req.body.segundo_nombre,
+		usuario:req.body.usuario,
+		password:req.body.password,
+		edad :req.body.edad,
+		email: req.body.email,
+		fecha_nacimiento:req.body.fecha_nacimiento,
+		genero:req.body.genero	
+	});
+	user.save().send( function(usu){
+		res.send("El susario a sido guardado con éxito ");
+	});
+});
