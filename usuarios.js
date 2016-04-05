@@ -2,15 +2,18 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 mongoose.connect('mongodb://localhost/base_datos');
+var email = [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3,4})+$/,"El correo no es valido"];
+var gen = ["F","M"];
 
 var user_schema = {
 	nombre:String,
 	segundo_nombre : String,
-	usuario:String,
-	password:String,
-	edad :Number,
-	email: String,
+	usuario:{type:String, required: true, maxlength:[50, "Nombre de usuario es muy grande"]},
+	password:{type:Stringl, minlength[8, "La contraseña es muy corta"]},
+	edad :{ type:Number, min:[5, "la edad no puede ser menor que 5"], max:[90, "La edad no puede ser mayor a 90"] },
+	email: {type:String, required: "El correo es obligatorio", match:email},
 	fecha_nacimiento:Date,
+	genero:{type:String, enum:{values:gen, message:"Opcion no valida"}}
 };
 
 
