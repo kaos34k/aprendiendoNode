@@ -40,6 +40,13 @@ user_schema.virtual('full_name').get(function() {
 });
 
 var user = mongoose.model('User', user_schema);
+/*
+*
+*/
+module.exports.user = user;
+/*
+ *hasta aqui va el modelo  de mongo para ser exportado a otros arcchivos ver video 19 y 7 CF
+*/
 
 
 /*para guardar un modelo*/
