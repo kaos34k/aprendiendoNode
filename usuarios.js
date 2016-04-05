@@ -55,7 +55,12 @@ app.post( "/users", function( req, res) {
 		fecha_nacimiento:req.body.fecha_nacimiento,
 		genero:req.body.genero	
 	});
-	user.save().send( function(usu){
+	user.save().then( function(usu){
 		res.send("El susario a sido guardado con éxito ");
+	},function(err){
+		if(err){
+			console.log(String(err));
+			res.send("Ocurrio un error al crear el usuario");
+		}
 	});
 });
